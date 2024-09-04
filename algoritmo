@@ -1,0 +1,188 @@
+from random import random
+def multiplicar(X,Y):
+  for i in range(len(X)):
+    for j in range(len(X[0])):
+      X[i][j] = X[i][j]*Y
+  return X
+def criarmatriz(LA,CA):
+  A = [None]*LA
+  for i in range(len(A)):
+    A[i] = [None]*CA
+    for j in range(len(A[0])):
+      A[i][j] = int(random()*100)
+  return A
+def criarmatrizInput(LA,CA):
+  A = [None]*LA
+  for i in range(len(A)):
+    A[i] = [None]*CA
+    for j in range(len(A[0])):
+      A[i][j] = int(input(f"cadastre o valor da posição[{i}][{j}]= "))
+  return A
+LA,CA = map(int, input("Matriz de A= ").split("x"))
+A = criarmatrizInput(LA,CA)
+LB,CB = map(int, input("Matriz de B= ").split("x"))
+B = criarmatrizInput(LB,CB)
+print("1)")
+X = int(input("A*X="))
+multiplicar(A,X)
+print(f"Resultado={A}")
+Y = int(input("B*Y="))
+multiplicar(B,Y)
+print(f"resultado={B}")
+print("2)")
+C = criarmatriz(CA,LA)
+for i in range(len(C)):
+  for j in range(len(C[0])):
+    C[i][j] = A[j][i]
+print(f"Matriz A transposta(C)={C}")
+D = criarmatriz(CB,LB)
+for i in range(len(D)):
+  for j in range(len(D[0])):
+    D[i][j] = B[j][i]
+print(f"Matriz B transposta(D)={D}")
+print("3)")
+if ((LA==LB)and(CA==CB)):
+  Soma = criarmatriz(LA,CA)
+  for i in range(len(A)):
+    for j in range(len(A[0])):
+      Soma[i][j] = A[i][j]+B[i][j]
+  print(f"Soma das matrizes A e B={Soma}")
+else:
+  print("As linhas e colunas de A devem ser iguais as linhas e colunas de B")
+print("4)")
+print("a)")
+if (LA==CA):
+  print("Diagonal principal de A ",end="=")
+  for i in range(len(A)):
+    for j in range(len(A)):
+      if (A[i]==A[j]):
+        print(f"{A[i][j]},",end="")
+  print("\nDiagonal secundaria de A ",end="=")
+  for i in range(len(A)):
+    print(f"{A[i][LA-1-i]},",end="")
+print("b)")
+if (LA!=CA):
+  maior = 0
+  for i in range(len(A)):
+    for j in range(len(A[0])):
+      if A[i][j]>maior:
+          maior = A[i][j]
+          x = [i]
+          y = [j]
+  print(f"maior valor em A= {maior},posição={x},{y}")
+print("5)")
+if (LB==CB):
+  print("b)")
+  menor = B[0][0]
+  for i in range(len(B)):
+    for j in range(len(B[0])):
+      if B[i][j]<menor:
+          menor = B[i][j]
+          x = [i]
+          y = [j]
+  print(f"menor valor em B= {menor},posição={x},{y}")
+print("6)")
+if ((LA==1)or(CA==1)):
+  soma = 0
+  for i in range(len(A)):
+    for j in range(len(A[0])):
+      soma = soma + A[i][j]
+  media = soma/(CA*LA)
+  print(f"Média de A= {media:.1f}")
+else:
+  for i in range(len(A)):
+    soma = 0
+    for j in range(len(A[0])):
+      soma = soma + A[i][j]
+    media = soma/CA
+    print(f"\nmédia A da linha({[i]}){media:.1f}")
+  X = 0
+  while (X<=(CA-1)):
+    soma = 0
+    for i in range(len(A)):
+      soma = soma + A[i][X]
+    media = soma/LA
+
+    print(f"média A da coluna{X}= {media:.1f}")
+    X+=1
+print("7)")
+if (LB!=CB):
+  if (LB==1) or (CB==1):
+    print("2.5*B= ",end = "")
+    for i in range(len(B)):
+      for j in range(len(B[0])):
+        X = (B[i][j])*2.5
+        print(f"{X}",end=",")
+  else:
+    y = 0
+    for i in range(len(B)):
+      for j in range(len(B[0])):
+        x = 0
+        for c in range(1,(B[i][j])+1):
+          if ((B[i][j])==0)or((B[i][j])==1):
+            pass
+          else:
+            if ((B[i][j])%c)==0:
+              x = x + 1
+            else:
+              pass
+        if x==2:
+          y = y + 1
+    print(f"quantidade de númeors primos em B= {y}")
+print("8)")
+N = int(input("\ndigite 1 ou 0: "))
+while (N!=0) and (N!=1):
+  N = int(input("digite 1 ou 0: "))
+if (N==0):
+  Z = criarmatriz(LB,CB)
+  for i in range(len(Z)):
+    for j in range(len(Z[0])):
+      Z[i][j] = B[i][j]
+  if (LB==1) or (CB==1):
+    if (LB==1):
+      Zalt = criarmatriz((CB*LB),CB)
+    else:
+      Zalt = criarmatriz(LB,(CB*LB))
+  elif (LB==CB):
+    Zalt = criarmatriz(LB,1)
+    for i in range(len(Zalt)):
+      for j in range(len(B)):
+        if ([i]==[j]):
+          Zalt[i] = B[i][j]
+  elif(LB!=CB):
+    somaRetangulo = 0
+    for i in range(len(B)):
+      for j in range(len(B[0])):
+        somaRetangulo = somaRetangulo + B[i][j]
+    print(f"soma dos elementos de Z= {somaRetangulo}")
+
+else:
+  Z = criarmatriz(LA,CA)
+  for i in range(len(Z)):
+    for j in range(len(Z[0])):
+      Z[i][j] = A[i][j]
+  if (LA==1) or (CA==1):
+    if (LA==1):
+      Zalt = criarmatriz((CA*LA),CA)
+    else:
+      Zalt = criarmatriz(LA,(CA*LA))
+  elif (LA==CA):
+    Zalt = criarmatriz(LA,1)
+    for i in range(len(Zalt)):
+      for j in range(len(A)):
+        if ([i]==[j]):
+          Zalt[i] = A[i][j]
+  elif(LA!=CA):
+    somaRetangulo = 0
+    for i in range(len(A)):
+      for j in range(len(A[0])):
+        somaRetangulo = somaRetangulo + A[i][j]
+    print(f"soma dos elementos de Z= {somaRetangulo}")
+print("9)")
+if (CA==LB):
+  R = criarmatriz(LA,CB)
+  for i in range(1,LA):
+    for j in range(1,CB):
+      for c in range(1,CA):
+        R[i][j] = (R[i][j])+((A[i][c])*(B[c][j]))
+  print(f"A*B={R}")
